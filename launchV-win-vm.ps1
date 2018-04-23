@@ -1,5 +1,5 @@
 ﻿# Params
-$subscriptionId = "5bf4e2b7-a38f-4aea-b649-6327151af3a9"
+$subscriptionId = ""
 
 $rgName = "jegebhTest"
 $vmName = "jegebhWinVm"
