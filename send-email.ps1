@@ -5,7 +5,7 @@ Param (
     $RunbookName,
  
     [Parameter (Mandatory = $true)]
-    [string] 
+    [object] 
     $MessageBody
   )
  
@@ -22,10 +22,15 @@ $Message.To.Add("v-jegebh@microsoft.com")
    
 # Set email subject
 $Message.SubjectEncoding = ([System.Text.Encoding]::UTF8)
-$Message.Subject = "Runbook job: $($RunbookName)"
+$Message.Subject = "Runbook job: $($RunbookName) | Deployment state: $($MessageBody.ProvisioningState)"
          
 # Set email body
-$Message.Body = "Runbook message: <br /><br /> $($MessageBody)"
+$Message.Body = "ARM Template Name: $($MessageBody.DeploymentName) `
+                 <br /> Deployment state: $($MessageBody.ProvisioningState) `
+                 <br /> Resource Group: $($MesssageBody.ResourceGroupName) `
+                 <br /> CorrelationId: $($MesssageBody.CorrelationId) `
+                 <br /> Deployment time: $($MessageBody.TimeStamp) `
+                 <br /> Outputs: $($MessageBody.OutputsString) "
 $Message.BodyEncoding = ([System.Text.Encoding]::UTF8)
 $Message.IsBodyHtml = $true
          
